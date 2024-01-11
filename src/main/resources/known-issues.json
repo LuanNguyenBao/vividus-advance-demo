@@ -1,0 +1,7 @@
+{
+  "BUG-001": {
+    "type": "Internal",
+    "assertionPattern": ".*Expected: \"true\" Actual: was \"false\".*",
+    "description": "The thank you message to be changed in the upcoming release"
+  }
+}

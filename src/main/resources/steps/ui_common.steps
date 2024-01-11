@@ -1,0 +1,25 @@
+Composite: When I navigate to the website homepage
+Given I am on main application page
+When I wait until element located by `caseSensitiveText(Swag Labs)` appears
+Then `${current-page-url}` is equal to `https://www.saucedemo.com/`
+When I take screenshot
+
+Composite: When I fill $userName, $password and click button Login in homepage
+When I enter `<userName>` in field located by `id(user-name)`
+And I enter `<password>` in field located by `id(password)`
+And I click on element located by `id(login-button)`
+
+Composite: When I add to cart the first item have sorting $sortingValue in Products page
+When I select `<sortingValue>` in dropdown located by `className(product_sort_container)`
+And I click on element located by `cssSelector(div.inventory_item:nth-child(1) button)`
+
+Composite: Then I validate the order summary
+When I save text of element located by `cssSelector(div.cart_item:nth-child(3) div.inventory_item_price)` to scenario variable `firstItemPrice`
+Given I initialize scenario variable `firstItemPrice` with value `#{substringAfter(${firstItemPrice}, $)}`
+When I save text of element located by `cssSelector(div.cart_item:nth-child(4) div.inventory_item_price)` to scenario variable `secondItemPrice`
+Given I initialize scenario variable `secondItemPrice` with value `#{substringAfter(${secondItemPrice}, $)}`
+When I save text of element located by `className(summary_tax_label)` to scenario variable `taxPrice`
+Given I initialize scenario variable `taxPrice` with value `#{substringAfter(${taxPrice}, $)}`
+When I save text of element located by `className(summary_total_label)` to scenario variable `totalPriceActual`
+Given I initialize scenario variable `totalPriceActual` with value `#{substringAfter(${totalPriceActual}, $)}`
+Then `#{round(#{eval(${firstItemPrice} + ${secondItemPrice} + ${taxPrice})}, 2, half up)}` is equal to `${totalPriceActual}`
