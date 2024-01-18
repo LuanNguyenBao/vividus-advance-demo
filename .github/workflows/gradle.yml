@@ -54,26 +54,6 @@ jobs:
     #   with:
     #     name: allure-results
     #     path: allure-results
-
-    - name: Set up Python 3.7
-      uses: actions/setup-python@v1
-      with:
-        python-version: "3.7"
-
-    - uses: actions/checkout@v1
-
-    - name: Fetch action
-      id: pl
-      uses: Rishabh510/Path-lister-action@master
-      with:
-        path: "output/"
-
-    - name: Output results
-      run: |
-        echo "Found ${{ steps.pl.outputs.path_count }} file(s) with this extension:"
-        for i in ${{ steps.pl.outputs.paths }}; do
-        echo $i
-        done
     
     - name: Get Allure history
       uses: actions/checkout@v4.1.1
@@ -89,9 +69,7 @@ jobs:
       id: allure-report
       with:
         allure_results: output/allure-results
-        allure_report: ${{ github.run_number }}
-        gh_pages: gh-pages
-        allure_history: /allure-history
+        allure_history: allure-history
         keep_reports: 30
 
     - name: Deploy report to Github Pages
