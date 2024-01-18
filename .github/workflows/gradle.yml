@@ -46,7 +46,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Allure report
-        path: .output/reports/allure
+        path: ${{ github.run_number }}
     
     - name: Get Allure history
       uses: actions/checkout@v4.1.1
@@ -61,8 +61,8 @@ jobs:
       if: always()
       id: allure-report
       with:
-        allure_results: ./output/allure-results
-        allure_history: ./output/history
+        allure_results: ./allure-results
+        allure_history: ./history
         keep_reports: 30
 
     - name: Deploy report to Github Pages
@@ -71,4 +71,4 @@ jobs:
       with:
         personal_token: ${{ secrets.ACTION_TOKEN }}
         publish_branch: gh-pages
-        publish_dir: ./output/history
+        publish_dir: ./history
