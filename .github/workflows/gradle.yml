@@ -12,8 +12,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     
     steps:
     - name: Checkout (including submodules and tags) 
@@ -29,8 +27,9 @@ jobs:
         distribution: 'temurin'
     
     - name: Build with Gradle
-      shell: bash
-      run: chmod +x ./gradlew build
+      uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
+      with:
+        arguments: build
   
     - name: Run tests
       run: ./gradlew runStories
