@@ -41,12 +41,12 @@ jobs:
     if: always()
     needs: [ build ]
     steps:
-    - name: Download Artifacts 🔻
-      uses: actions/download-artifact@v4.1.1
-      id: download
+
+    - name: Publish Allure report
+      uses: actions/upload-artifact@v4
       with:
-        name: allure-results
-        path: allure-results
+        name: Allure report
+        path: output/reports/allure
     
     - name: Get Allure history
       uses: actions/checkout@v4.1.1
@@ -68,7 +68,7 @@ jobs:
     - name: Deploy report to Github Pages
       uses: peaceiris/actions-gh-pages@v3.9.3
       if: always()
-      env:
-        PERSONAL_TOKEN: ${{ secrets.ACTION_TOKEN }}
-        PUBLISH_BRANCH: gh-pages
-        PUBLISH_DIR: allure-history
+      with:
+        personal_token: ${{ secrets.ACTION_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: allure-history
