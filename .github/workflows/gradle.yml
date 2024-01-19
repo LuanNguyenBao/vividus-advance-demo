@@ -55,17 +55,17 @@ jobs:
       run: |
         if [[ $SUITE = "API" ]]; then
           ./gradlew runStories -Pvividus.configuration.suites=api
-        elif [[ $SUITE = "Web" && $BROWSER = "Chrome"]]; then
+        elif [[ $SUITE = "Web" && $BROWSER = "Chrome" ]]; then
           ./gradlew runStories -Pvividus.configuration.suites=web \
                                -Pvividus.configuration.profiles=web/desktop/chrome
-        elif [[ $SUITE = "Web" && $BROWSER = "Firefox"]]; then
+        elif [[ $SUITE = "Web" && $BROWSER = "Firefox" ]]; then
           ./gradlew runStories -Pvividus.configuration.suites=web \
                                -Pvividus.configuration.profiles=web/desktop/firefox
-        elif [[ $SUITE = "Web" && $BROWSER = "Edge"]]; then
+        elif [[ $SUITE = "Web" && $BROWSER = "Edge" ]]; then
           ./gradlew runStories -Pvividus.configuration.suites=web \
                                -Pvividus.configuration.profiles=web/desktop/edge
         else
-          echo "Please select the option before clicking Run workflow"
+          ./gradlew runStories
         fi
 
     - name: Upload artifact
