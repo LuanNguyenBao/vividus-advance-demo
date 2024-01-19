@@ -8,6 +8,21 @@ on:
   schedule:
     # Execute at 24:00 UTC+7 Monday to Friday
     - cron: '0 0 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      suite:
+        type: choice
+        description: Choice of a suite
+        options:
+        - API
+        - Web
+      browser:
+        type: choice
+        description: Choice a browser( apply for suite is Web)
+        options:
+        - Chrome
+        - Firefox
+        - Edge
 
 jobs:
   build:
@@ -33,7 +48,24 @@ jobs:
         arguments: build
   
     - name: Run tests
-      run: ./gradlew runStories
+      env:
+        SUITE: ${{ github.event.inputs.suite }}
+        BROWSER: ${{ github.event.inputs.browser }}
+      run: |
+        if [[ $SUITE = "API" ]]; then
+          ./gradlew runStories -Pvividus.configuration.suites=api
+        elif [[ $SUITE = "Web" && $BROWSER = "Chrome"]]; then
+          ./gradlew runStories -Pvividus.configuration.suites=web \
+                               -Pvividus.configuration.profiles=web/desktop/chrome
+        elif [[ $SUITE = "Web" && $BROWSER = "Firefox"]]; then
+          ./gradlew runStories -Pvividus.configuration.suites=web \
+                               -Pvividus.configuration.profiles=web/desktop/firefox
+        elif [[ $SUITE = "Web" && $BROWSER = "Edge"]]; then
+          ./gradlew runStories -Pvividus.configuration.suites=web \
+                               -Pvividus.configuration.profiles=web/desktop/edge
+        else
+          echo "Please select the option before clicking Run workflow"
+        fi
 
     - name: Upload artifact
       if: always()
