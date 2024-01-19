@@ -51,6 +51,7 @@ jobs:
       env:
         SUITE: ${{ github.event.inputs.suite }}
         BROWSER: ${{ github.event.inputs.browser }}
+      shell: bash
       run: |
         if [[ $SUITE = "API" ]]; then
           ./gradlew runStories -Pvividus.configuration.suites=api
