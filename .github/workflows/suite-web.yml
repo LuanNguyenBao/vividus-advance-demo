@@ -1,4 +1,4 @@
-name: Vividus Advance Demo
+name: Vividus Advance Demo - Suite Web
 
 on:
   push:
@@ -10,15 +10,9 @@ on:
     - cron: '0 0 * * 1-5'
   workflow_dispatch:
     inputs:
-      suite:
-        type: choice
-        description: Choice of a suite
-        options:
-        - API
-        - Web
       browser:
         type: choice
-        description: Choice a browser( apply for suite is Web)
+        description: Choice a browser to run the suite Web
         options:
         - Chrome
         - Firefox
@@ -49,19 +43,16 @@ jobs:
   
     - name: Run tests
       env:
-        SUITE: ${{ github.event.inputs.suite }}
         BROWSER: ${{ github.event.inputs.browser }}
       shell: bash
       run: |
-        if [[ $SUITE = "API" ]]; then
-          ./gradlew runStories -Pvividus.configuration.suites=api
-        elif [[ $SUITE = "Web" && $BROWSER = "Chrome" ]]; then
+        if [[ $BROWSER = "Chrome" ]]; then
           ./gradlew runStories -Pvividus.configuration.suites=web \
                                -Pvividus.configuration.profiles=web/desktop/chrome
-        elif [[ $SUITE = "Web" && $BROWSER = "Firefox" ]]; then
+        elif [[ $BROWSER = "Firefox" ]]; then
           ./gradlew runStories -Pvividus.configuration.suites=web \
                                -Pvividus.configuration.profiles=web/desktop/firefox
-        elif [[ $SUITE = "Web" && $BROWSER = "Edge" ]]; then
+        elif [[ $BROWSER = "Edge" ]]; then
           ./gradlew runStories -Pvividus.configuration.suites=web \
                                -Pvividus.configuration.profiles=web/desktop/edge
         else
@@ -132,7 +123,7 @@ jobs:
           subject: Vividus test results for ${{ github.repository }}
           html_body: |
             Hi team,</br>
-            The workflow ${{ github.workflow }} has status <b>${{ job.status }}</b></br>
+            The workflow ${{ github.workflow }} has status <b>${{ job.status }}</b>.</br>
             Please go to this link for more details: https://luannguyenbao.github.io/vividus-advance-demo/ </br>
             </br>
             Regards,</br>
