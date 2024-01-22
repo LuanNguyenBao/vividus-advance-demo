@@ -115,3 +115,27 @@ jobs:
         personal_token: ${{ secrets.ACTION_TOKEN }}
         publish_branch: gh-pages
         publish_dir: allure-history
+
+  send_test_result:
+    name: Send test results to emails
+    runs-on: ubuntu-latest
+    if: always()
+    needs: generate_report
+    steps:
+      - name: Send test results to emails
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{secrets.MAIL_ADDRESS}}
+          password: ${{secrets.MAIL_PASSWORD}}
+          subject: Vividus test results for ${{ github.repository }}
+          html_body: |
+            Dear team,</br>\
+            The ${{ github.workflow }} of ${{ github.repository }} has status <b>${{ job.status }}</b>\
+            Please go to this link for more details: https://luannguyenbao.github.io/vividus-advance-demo/ </b>\
+            </br>\
+            Regards,</br>\
+            Vividus team.
+          from: Epam VietNam Vividus
+          to: luan_nguyen@epam.com, duc_le@epam.com
