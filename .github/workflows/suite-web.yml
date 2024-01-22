@@ -107,7 +107,7 @@ jobs:
       with:
         personal_token: ${{ secrets.ACTION_TOKEN }}
         publish_branch: gh-pages
-        publish_dir: web/allure-history-web
+        publish_dir: allure-history-web
         keep_files: true
 
   send_test_result:
