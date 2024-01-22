@@ -107,6 +107,7 @@ jobs:
         personal_token: ${{ secrets.ACTION_TOKEN }}
         publish_branch: gh-pages
         publish_dir: allure-history-web/web-result
+        keep_files: true
 
   send_test_result:
     name: Send test results to emails
