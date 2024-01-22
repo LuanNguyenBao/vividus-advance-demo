@@ -20,5 +20,7 @@
 
 ## View The Test Execution Report
 
-On IntelliJ source tree, find `index.html` in output/reports/allure folder > Right click and select Open In > Select which browser that you want to run
+On IntelliJ source tree, find `index.html` in output/web/allure-report-web folder > Right click and select Open In > Select which browser that you want to run
 ![img.png](img.png)
+
+The path for Allure API report is similar and in output/api/allure-report-api folder
