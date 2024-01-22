@@ -40,8 +40,8 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: allure-results
-        path: output/allure-results
+        name: allure-results-api
+        path: output/api/allure-results-api
   
   generate_report:
     name: Generate Allure report
@@ -53,7 +53,7 @@ jobs:
       uses: actions/download-artifact@v4
       id: download-allure-api
       with:
-        name: allure-results
+        name: allure-results-api
         path: allure-results-api
 
     - name: Display downloaded files
@@ -75,6 +75,7 @@ jobs:
         allure_results: allure-results-api
         allure_report: allure-report-api
         allure_history: allure-history-api
+        subfolder: api
         keep_reports: 30
 
     - name: Deploy report to Github Pages
@@ -104,7 +105,7 @@ jobs:
             Hi team,</br>
             </br>
             The workflow ${{ github.workflow }} has status <b>${{ job.status }}</b>.</br>
-            Please go to this link for more details: https://luannguyenbao.github.io/vividus-advance-demo/ </br>
+            Please go to this link for more details: https://luannguyenbao.github.io/vividus-advance-demo/api/ </br>
             </br>
             Regards,</br>
             Epam VietNam Vividus.
