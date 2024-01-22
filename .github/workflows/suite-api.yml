@@ -34,7 +34,7 @@ jobs:
         arguments: build
   
     - name: Run tests
-      run: gradlew runStories -Pvividus.configuration.suites=api
+      run: ./gradlew runStories -Pvividus.configuration.suites=api
 
     - name: Upload artifact
       if: always()
