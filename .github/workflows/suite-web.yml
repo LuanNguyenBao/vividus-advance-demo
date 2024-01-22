@@ -21,7 +21,7 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-    name: Build and Run tests
+    name: Build and Run Web tests
     
     steps:
     - name: Checkout (including submodules and tags) 
@@ -74,7 +74,7 @@ jobs:
     steps:
     - name: Download Artifacts 🔻
       uses: actions/download-artifact@v4
-      id: download
+      id: download-report-web
       with:
         name: allure-results
         path: allure-results-web
@@ -93,7 +93,7 @@ jobs:
     - name: Generate Allure Report with history
       uses: simple-elf/allure-report-action@v1.8
       if: always()
-      id: allure-report
+      id: allure-report-web
       with:
         allure_results: allure-results-web
         allure_report: allure-report-web
@@ -106,7 +106,7 @@ jobs:
       with:
         personal_token: ${{ secrets.ACTION_TOKEN }}
         publish_branch: gh-pages
-        publish_dir: allure-history-web/web-result
+        publish_dir: allure-history-web
         keep_files: true
 
   send_test_result:
