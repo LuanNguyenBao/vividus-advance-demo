@@ -128,7 +128,7 @@ jobs:
             Hi team,</br>
             </br>
             The workflow ${{ github.workflow }} has status <b>${{ job.status }}</b>.</br>
-            Please go to this link for more details: https://luannguyenbao.github.io/vividus-advance-demo/ </br>
+            Please go to this link for more details: https://luannguyenbao.github.io/vividus-advance-demo/web/ </br>
             </br>
             Regards,</br>
             Epam VietNam Vividus.
