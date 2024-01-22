@@ -13,7 +13,7 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-    name: Build and Run tests
+    name: Build and Run API tests
     
     steps:
     - name: Checkout (including submodules and tags) 
@@ -34,7 +34,7 @@ jobs:
         arguments: build
   
     - name: Run tests
-      run: ./gradlew runStories -Pvividus.configuration.suites=api
+      run: gradlew runStories -Pvividus.configuration.suites=api
 
     - name: Upload artifact
       if: always()
@@ -83,7 +83,7 @@ jobs:
       with:
         personal_token: ${{ secrets.ACTION_TOKEN }}
         publish_branch: gh-pages
-        publish_dir: allure-history-api/api-result
+        publish_dir: allure-history-api
         keep_files: true
 
   send_test_result:
