@@ -131,11 +131,11 @@ jobs:
           password: ${{secrets.MAIL_PASSWORD}}
           subject: Vividus test results for ${{ github.repository }}
           html_body: |
-            Dear team,</br>\
-            The ${{ github.workflow }} of ${{ github.repository }} has status <b>${{ job.status }}</b>\
-            Please go to this link for more details: https://luannguyenbao.github.io/vividus-advance-demo/ </b>\
-            </br>\
-            Regards,</br>\
-            Vividus team.
+            Hi team,</br>
+            The workflow ${{ github.workflow }} has status <b>${{ job.status }}</b></br>
+            Please go to this link for more details: https://luannguyenbao.github.io/vividus-advance-demo/ </br>
+            </br>
+            Regards,</br>
+            Epam VietNam Vividus.
           from: Epam VietNam Vividus
           to: luan_nguyen@epam.com, duc_le@epam.com
