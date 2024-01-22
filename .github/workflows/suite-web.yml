@@ -96,6 +96,7 @@ jobs:
       id: allure-report
       with:
         allure_results: allure-results-web
+        allure_report: allure-report-web
         allure_history: allure-history-web
         keep_reports: 30
 
