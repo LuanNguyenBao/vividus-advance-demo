@@ -51,10 +51,10 @@ jobs:
     steps:
     - name: Download Artifacts 🔻
       uses: actions/download-artifact@v4
-      id: download
+      id: download-allure-api
       with:
         name: allure-results
-        path: allure-results
+        path: allure-results-api
 
     - name: Display downloaded files
       run: ls -R
@@ -70,10 +70,11 @@ jobs:
     - name: Generate Allure Report with history
       uses: simple-elf/allure-report-action@v1.8
       if: always()
-      id: allure-report
+      id: allure-report-api
       with:
-        allure_results: allure-results
-        allure_history: allure-history
+        allure_results: allure-results-api
+        allure_report: allure-report-api
+        allure_history: allure-history-api
         keep_reports: 30
 
     - name: Deploy report to Github Pages
@@ -82,7 +83,7 @@ jobs:
       with:
         personal_token: ${{ secrets.ACTION_TOKEN }}
         publish_branch: gh-pages
-        publish_dir: allure-history
+        publish_dir: allure-history-api/api-result
 
   send_test_result:
     name: Send test results to emails
@@ -97,7 +98,7 @@ jobs:
           server_port: 465
           username: ${{secrets.MAIL_ADDRESS}}
           password: ${{secrets.MAIL_PASSWORD}}
-          subject: The API test results for presentation Vividus Advance Demo
+          subject: The suite API test results for presentation Vividus Advance Demo
           html_body: |
             Hi team,</br>
             </br>
