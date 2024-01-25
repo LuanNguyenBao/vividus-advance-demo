@@ -13,10 +13,15 @@
     gradlew build
    ```
 5. To execute the tests via CLI:
-   ```shell
-    gradlew runStories
-   ```
 
+For suite API:
+   ```shell
+    gradlew runStories -Pvividus.configuration.suites=api
+   ```
+For suite Web:
+   ```shell
+    gradlew runStories -Pvividus.configuration.suites=web
+   ```
 
 ## View The Test Execution Report
 
