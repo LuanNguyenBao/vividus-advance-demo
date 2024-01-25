@@ -1,10 +1,6 @@
-name: Vividus Advance Demo - Suite Web
+name: QA Environment - Suite Web
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
   schedule:
     # Execute at 24:00 UTC+7 Monday to Friday
     - cron: '0 0 * * 1-5'
@@ -47,13 +43,16 @@ jobs:
       shell: bash
       run: |
         if [[ $BROWSER = "Chrome" ]]; then
-          ./gradlew runStories -Pvividus.configuration.suites=web \
+          ./gradlew runStories -Pvividus.configuration.environments=qa \
+                               -Pvividus.configuration.suites=web \
                                -Pvividus.configuration.profiles=web/desktop/chrome
         elif [[ $BROWSER = "Firefox" ]]; then
-          ./gradlew runStories -Pvividus.configuration.suites=web \
+          ./gradlew runStories -Pvividus.configuration.environments=qa \
+                               -Pvividus.configuration.suites=web \
                                -Pvividus.configuration.profiles=web/desktop/firefox
         elif [[ $BROWSER = "Edge" ]]; then
-          ./gradlew runStories -Pvividus.configuration.suites=web \
+          ./gradlew runStories -Pvividus.configuration.environments=qa \
+                               -Pvividus.configuration.suites=web \
                                -Pvividus.configuration.profiles=web/desktop/edge
         else
           ./gradlew runStories
@@ -64,7 +63,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: allure-results-web
-        path: output/web/allure-results-web
+        path: output/qa-web-report/allure-results-web
   
   generate_report:
     name: Generate Allure report
@@ -98,7 +97,7 @@ jobs:
         allure_results: allure-results-web
         allure_report: allure-report-web
         allure_history: allure-history-web
-        subfolder: web
+        subfolder: qa-web
         keep_reports: 30
 
     - name: Deploy report to Github Pages
@@ -123,7 +122,7 @@ jobs:
           server_port: 465
           username: ${{secrets.MAIL_ADDRESS}}
           password: ${{secrets.MAIL_PASSWORD}}
-          subject: The suite Web test results for presentation Vividus Advance Demo
+          subject: The suite Web test results for presentation Vividus Advance Demo on QA environment
           html_body: |
             Hi team,</br>
             </br>
