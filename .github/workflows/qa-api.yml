@@ -1,10 +1,6 @@
-name: Vividus Advance Demo - Suite API
+name: QA Environment - Suite API
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
   schedule:
     # Execute at 24:00 UTC+7 Monday to Friday
     - cron: '0 0 * * 1-5'
@@ -35,14 +31,14 @@ jobs:
   
     - name: Run tests
       shell: bash
-      run: ./gradlew runStories -Pvividus.configuration.suites=api
+      run: ./gradlew runStories -Pvividus.configuration.suites=api -Pvividus.configuration.environments=qa
 
     - name: Upload artifact
       if: always()
       uses: actions/upload-artifact@v4
       with:
         name: allure-results-api
-        path: output/api/allure-results-api
+        path: output/qa-api-report/allure-results-api
   
   generate_report:
     name: Generate Allure report
@@ -76,7 +72,7 @@ jobs:
         allure_results: allure-results-api
         allure_report: allure-report-api
         allure_history: allure-history-api
-        subfolder: api
+        subfolder: qa-api
         keep_reports: 30
 
     - name: Deploy report to Github Pages
@@ -101,12 +97,12 @@ jobs:
           server_port: 465
           username: ${{secrets.MAIL_ADDRESS}}
           password: ${{secrets.MAIL_PASSWORD}}
-          subject: The suite API test results for presentation Vividus Advance Demo
+          subject: The suite API test results for presentation Vividus Advance Demo on QA environment
           html_body: |
             Hi team,</br>
             </br>
             The workflow ${{ github.workflow }} has status <b>${{ job.status }}</b>.</br>
-            Please go to this link for more details: https://luannguyenbao.github.io/vividus-advance-demo/api/ </br>
+            Please go to this link for more details: https://luannguyenbao.github.io/vividus-advance-demo/qa-api/ </br>
             </br>
             Regards,</br>
             Epam VietNam Vividus.
