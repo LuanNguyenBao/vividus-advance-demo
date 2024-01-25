@@ -1,0 +1,86 @@
+name: DEV Environment - Suite API
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    name: Build and Run API tests
+    
+    steps:
+    - name: Checkout (including submodules and tags) 
+      uses: actions/checkout@v4.1.1
+      with:
+        submodules: recursive
+        fetch-depth: 0
+        
+    - name: Set up JDK 19
+      uses: actions/setup-java@v4.0.0
+      with:
+        java-version: '19'
+        distribution: 'temurin'
+    
+    - name: Build with Gradle
+      uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
+      with:
+        arguments: build
+  
+    - name: Run tests
+      shell: bash
+      run: ./gradlew runStories -Pvividus.configuration.suites=api -Pvividus.configuration.environments=dev
+
+    - name: Upload artifact
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: allure-results-api
+        path: output/dev-api-report/allure-results-api
+  
+  generate_report:
+    name: Generate Allure report
+    runs-on: ubuntu-latest
+    if: always()
+    needs: [ build ]
+    steps:
+    - name: Download Artifacts 🔻
+      uses: actions/download-artifact@v4
+      id: download-allure-api
+      with:
+        name: allure-results-api
+        path: allure-results-api
+
+    - name: Display downloaded files
+      run: ls -R
+      
+    - name: Get Allure history
+      uses: actions/checkout@v4.1.1
+      if: always()
+      continue-on-error: true
+      with:
+        ref: gh-pages
+        path: gh-pages
+
+    - name: Generate Allure Report with history
+      uses: simple-elf/allure-report-action@v1.8
+      if: always()
+      id: allure-report-api
+      with:
+        allure_results: allure-results-api
+        allure_report: allure-report-api
+        allure_history: allure-history-api
+        subfolder: dev-api
+        keep_reports: 30
+
+    - name: Deploy report to Github Pages
+      uses: peaceiris/actions-gh-pages@v3.9.3
+      if: always()
+      with:
+        personal_token: ${{ secrets.ACTION_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: allure-history-api
+        keep_files: true
