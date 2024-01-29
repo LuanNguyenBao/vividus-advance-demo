@@ -56,7 +56,7 @@ jobs:
                                -Pvividus.configuration.suites=web \
                                -Pvividus.configuration.profiles=web/desktop/edge
         else
-          ./gradlew runStories -Pvividus.configuration.environments=dev
+          ./gradlew runStories -Pvividus.configuration.environments=dev -Pvividus.configuration.suites=web
         fi
 
     - name: Upload artifact
