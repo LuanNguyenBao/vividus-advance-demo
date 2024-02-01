@@ -1,0 +1,3 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Thu Feb 01 01:21:27 GMT 2024","Thu Feb 01 01:21:27 GMT 2024","173","batch-1","Example_API","","","","Verify Darth Vader's full body response",""
+"passed","Thu Feb 01 01:21:26 GMT 2024","Thu Feb 01 01:21:27 GMT 2024","1000","batch-1","Example_API","","","","Verify Luke's eyes are blue",""
