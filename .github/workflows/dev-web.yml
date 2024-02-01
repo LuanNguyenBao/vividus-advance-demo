@@ -9,7 +9,7 @@ on:
     inputs:
       browser:
         type: choice
-        description: Choice a browser to run the suite Web
+        description: Select a browser to run the suite Web
         options:
         - Chrome
         - Firefox
